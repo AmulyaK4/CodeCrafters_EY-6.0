@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeCrafters Dashboard - Research Analytics & Reports</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+    <div class="flex items-center gap-4">
+      <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
+        <span class="text-white font-bold text-lg">C</span>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">CodeCrafters Dashboard</h1>
+        <p class="text-sm text-gray-500">Research Analytics & Reports</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="p-6">
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <!-- Total Queries -->
+      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100 relative">
+        <div class="absolute top-4 right-4 bg-gray-900 text-white text-xs px-2 py-1 rounded-full" id="queries-change">+12%</div>
+        <div class="mb-4">
+          <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <div class="text-3xl font-bold text-gray-900 mb-1" id="total-queries">2,847</div>
+        <div class="text-sm text-gray-500">Total Queries</div>
+      </div>
+
+      <!-- Reports Generated -->
+      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100 relative">
+        <div class="absolute top-4 right-4 bg-gray-900 text-white text-xs px-2 py-1 rounded-full" id="reports-change">+8%</div>
+        <div class="mb-4">
+          <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <div class="text-3xl font-bold text-gray-900 mb-1" id="reports-generated">1,234</div>
+        <div class="text-sm text-gray-500">Reports Generated</div>
+      </div>
+
+      <!-- Active Users -->
+      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100 relative">
+        <div class="absolute top-4 right-4 bg-gray-900 text-white text-xs px-2 py-1 rounded-full" id="users-change">+24%</div>
+        <div class="mb-4">
+          <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+        </div>
+        <div class="text-3xl font-bold text-gray-900 mb-1" id="active-users">156</div>
+        <div class="text-sm text-gray-500">Active Users</div>
+      </div>
+
+      <!-- Avg Response Time -->
+      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100 relative">
+        <div class="absolute top-4 right-4 bg-gray-900 text-white text-xs px-2 py-1 rounded-full" id="response-change">-15%</div>
+        <div class="mb-4">
+          <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div class="text-3xl font-bold text-gray-900 mb-1" id="avg-response">2.3s</div>
+        <div class="text-sm text-gray-500">Avg. Response Time</div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Query Trend Chart -->
+      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="text-lg font-bold text-gray-900">Query Trend</h3>
+            <p class="text-sm text-gray-500">Last 6 months</p>
+          </div>
+          <button class="text-gray-500 hover:text-gray-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="query-trend-chart" style="height: 300px;"></div>
+      </div>
+
+      <!-- Query Categories Chart -->
+      <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="text-lg font-bold text-gray-900">Query Categories</h3>
+            <p class="text-sm text-gray-500">This week</p>
+          </div>
+          <button class="text-gray-500 hover:text-gray-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="query-categories-chart" style="height: 300px;"></div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    const apiBase = `${window.location.protocol}//${window.location.hostname}:8000`;
+
+    // Load dashboard stats
+    async function loadDashboardStats() {
+      try {
+        const response = await fetch(`${apiBase}/api/dashboard/stats`);
+        const data = await response.json();
+        
+        document.getElementById('total-queries').textContent = data.total_queries?.toLocaleString() || '2,847';
+        document.getElementById('reports-generated').textContent = data.reports_generated?.toLocaleString() || '1,234';
+        document.getElementById('active-users').textContent = data.active_users?.toLocaleString() || '156';
+        document.getElementById('avg-response').textContent = `${data.avg_response_time?.toFixed(1) || '2.3'}s`;
+        
+        // Update change indicators
+        if (data.queries_change) document.getElementById('queries-change').textContent = `${data.queries_change > 0 ? '+' : ''}${data.queries_change}%`;
+        if (data.reports_change) document.getElementById('reports-change').textContent = `${data.reports_change > 0 ? '+' : ''}${data.reports_change}%`;
+        if (data.users_change) document.getElementById('users-change').textContent = `${data.users_change > 0 ? '+' : ''}${data.users_change}%`;
+        if (data.response_change) document.getElementById('response-change').textContent = `${data.response_change > 0 ? '+' : ''}${data.response_change}%`;
+      } catch (error) {
+        console.error('Failed to load dashboard stats:', error);
+      }
+    }
+
+    // Load query trend chart
+    async function loadQueryTrend() {
+      try {
+        const response = await fetch(`${apiBase}/api/dashboard/query-trend`);
+        const data = await response.json();
+        
+        const trace = {
+          x: data.months || ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          y: data.values || [400, 600, 750, 650, 850, 950],
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { color: '#1f2937', width: 2 },
+          marker: { color: '#1f2937', size: 8 }
+        };
+
+        const layout = {
+          margin: { l: 40, r: 20, t: 20, b: 40 },
+          xaxis: { showgrid: true, gridcolor: '#f3f4f6' },
+          yaxis: { showgrid: true, gridcolor: '#f3f4f6', range: [0, 1200] },
+          plot_bgcolor: 'white',
+          paper_bgcolor: 'white',
+          font: { color: '#6b7280', size: 12 }
+        };
+
+        Plotly.newPlot('query-trend-chart', [trace], layout, { responsive: true });
+      } catch (error) {
+        console.error('Failed to load query trend:', error);
+        // Fallback chart
+        const trace = {
+          x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          y: [400, 600, 750, 650, 850, 950],
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { color: '#1f2937', width: 2 },
+          marker: { color: '#1f2937', size: 8 }
+        };
+        const layout = {
+          margin: { l: 40, r: 20, t: 20, b: 40 },
+          xaxis: { showgrid: true, gridcolor: '#f3f4f6' },
+          yaxis: { showgrid: true, gridcolor: '#f3f4f6', range: [0, 1200] },
+          plot_bgcolor: 'white',
+          paper_bgcolor: 'white',
+          font: { color: '#6b7280', size: 12 }
+        };
+        Plotly.newPlot('query-trend-chart', [trace], layout, { responsive: true });
+      }
+    }
+
+    // Load query categories chart
+    async function loadQueryCategories() {
+      try {
+        const response = await fetch(`${apiBase}/api/dashboard/query-categories`);
+        const data = await response.json();
+        
+        const trace = {
+          x: data.categories || ['Molecules', 'Diseases', 'Trials', 'Drugs', 'Genetics'],
+          y: data.values || [45, 38, 32, 28, 22],
+          type: 'bar',
+          marker: { color: '#1f2937' }
+        };
+
+        const layout = {
+          margin: { l: 40, r: 20, t: 20, b: 40 },
+          xaxis: { showgrid: false },
+          yaxis: { showgrid: true, gridcolor: '#f3f4f6', range: [0, 60] },
+          plot_bgcolor: 'white',
+          paper_bgcolor: 'white',
+          font: { color: '#6b7280', size: 12 }
+        };
+
+        Plotly.newPlot('query-categories-chart', [trace], layout, { responsive: true });
+      } catch (error) {
+        console.error('Failed to load query categories:', error);
+        // Fallback chart
+        const trace = {
+          x: ['Molecules', 'Diseases', 'Trials', 'Drugs', 'Genetics'],
+          y: [45, 38, 32, 28, 22],
+          type: 'bar',
+          marker: { color: '#1f2937' }
+        };
+        const layout = {
+          margin: { l: 40, r: 20, t: 20, b: 40 },
+          xaxis: { showgrid: false },
+          yaxis: { showgrid: true, gridcolor: '#f3f4f6', range: [0, 60] },
+          plot_bgcolor: 'white',
+          paper_bgcolor: 'white',
+          font: { color: '#6b7280', size: 12 }
+        };
+        Plotly.newPlot('query-categories-chart', [trace], layout, { responsive: true });
+      }
+    }
+
+    // Initialize dashboard
+    loadDashboardStats();
+    loadQueryTrend();
+    loadQueryCategories();
+  </script>
+</body>
+</html>
+
+

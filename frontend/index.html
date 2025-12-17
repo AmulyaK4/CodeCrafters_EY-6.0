@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pharma Agentic Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body class="bg-gray-50">
+  <div class="min-h-screen flex">
+    <aside class="w-64 bg-white shadow-md p-4">
+      <h1 class="text-xl font-bold mb-4">Dashboard</h1>
+      <div id="dashboard-cards"></div>
+    </aside>
+    <main class="flex-1 p-6">
+      <div class="bg-white shadow rounded p-4 h-[80vh] flex flex-col">
+        <div class="flex-1 overflow-y-auto" id="chat-window"></div>
+        <div class="mt-4" id="market-chart"></div>
+        <div class="mt-4 flex">
+          <input id="chat-input" class="flex-1 border rounded px-3 py-2" placeholder="Ask about trials, patents, markets..." />
+          <button id="send-btn" class="ml-2 px-4 py-2 bg-blue-600 text-white rounded">Send</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
+

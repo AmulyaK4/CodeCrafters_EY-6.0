@@ -1,0 +1,33 @@
++-------------------------------+
+|   Frontend (NGINX)            |
+|   Tailwind + WS/REST + Plotly |
++---------------+---------------+
+                |
+                v
++-------------------------------+
+|        FastAPI API            |
+|   /api/chat /reports /ws      |
+|   PDF + Plotly image          |
++---------+---------+-----------+
+          |         |
+          |         +--> ReportLab PDF (chart)
+          v
++-------------------------------+
+|         Master Agent          |
++---+---------+---------+-------+
+    |         |         |
+ Trials   Patents    Market    Papers
+    \        |         |         /
+     \       |         |        /
+      \      |         |       /
+      +-----------------------+
+      |     Synthesis (LLM)   |
+      +-----------------------+
+                |
+                v
++-------------------------------+
+|           MySQL DB            |
+| queries / responses / cites   |
+| sessions / reports            |
++-------------------------------+
+
